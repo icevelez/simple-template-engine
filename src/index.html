@@ -1,0 +1,31 @@
+<script use="server">
+    import context from "./context.js";
+    import { Redirect } from "./middleware/template_engine.js";
+
+    export default function(request) {
+        if (!request.session) {
+            return new Redirect("/login");
+        }
+
+        console.log(context.mysql);
+
+        return {
+            name : "John Doe",
+            message : "Hello from SSR",
+            test : request.url,
+        }
+    }
+</script>
+
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>{{ message }}! {{ name }}</h1>
+        <p>{{ test }}</p>
+    </body>
+</html>
